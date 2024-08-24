@@ -1,10 +1,10 @@
 # SurveyMonkey
 
-This page guides you through the process of setting up the SurveyMonkey source connector.
+This page shows you how to set up the SurveyMonkey source connector.
 
 :::note
 
-OAuth for Survey Monkey is officially supported only for the US. We are testing how to enable it in the EU at the moment. If you run into any issues, please [reach out to us](mailto:product@airbyte.io) so we can promptly assist you.
+OAuth for SurveyMonkey is officially supported only for the US. We are currently testing how to enable it in the EU. If you run into any issues, please [reach out to us](mailto:product@airbyte.io) so we can promptly assist you.
 
 :::
 
@@ -12,16 +12,34 @@ OAuth for Survey Monkey is officially supported only for the US. We are testing 
 
 ## Prerequisites
 
-**For Airbyte Open Source:**
+**For Airbyte OSS** 
 
-- Access Token
+-`Access Token`
+
 <!-- /env:oss -->
 
 ## Setup guide
 
 ### Step 1: Set up SurveyMonkey
 
-Please read this [docs](https://developer.surveymonkey.com/api/v3/#getting-started). Register your application [here](https://developer.surveymonkey.com/apps/) Then go to Settings and copy your access token
+<!-- env:cloud -->
+
+**For Airbyte Cloud** 
+
+1. Learn how to register an application to your SurveyMonkey account [here](https://developer.surveymonkey.com/api/v3/#getting-started).
+2. Register the application [here](https://developer.surveymonkey.com/apps/).
+
+<!-- /env:cloud -->
+
+<!-- env:oss -->
+
+**For Airbyte OSS** 
+
+1. Learn how to register an application to your SurveyMonkey account and authenticate [here](https://developer.surveymonkey.com/api/v3/#getting-started).
+2. Register the application [here](https://developer.surveymonkey.com/apps/).
+3. Go to the application Settings in your SurveyMonkey account and copy your `Access Token`.
+
+<!-- /env:oss -->
 
 ### Step 2: Set up the source connector in Airbyte
 
@@ -30,43 +48,42 @@ Please read this [docs](https://developer.surveymonkey.com/api/v3/#getting-start
 **For Airbyte Cloud:**
 
 1. [Log into your Airbyte Cloud](https://cloud.airbyte.com/workspaces) account.
-2. In the left navigation bar, click **Sources**. In the top-right corner, click **+ new source**.
-3. On the source setup page, select **SurveyMonkey** from the Source type dropdown and enter a name for this connector.
-4. lick `Authenticate your account`.
-5. Log in and Authorize to the SurveyMonkey account
-6. Choose required Start date
-7. click `Set up source`.
+2. In the navigation bar, click **Sources**. In the top right corner, click **+ New Source**. 
+3. On the source setup page, enter a name for this connector.
+4. Click **Authenticate your account**.
+5. Log in and Authorize your SurveyMonkey account.
+6. Choose the required **Start date**.
+7. Click **Set up source**.
+
 <!-- /env:cloud -->
 
 <!-- env:oss -->
 
-**For Airbyte Open Source:**
+**For Airbyte OSS:**
 
-1. Go to local Airbyte page.
-2. In the left navigation bar, click **Sources**. In the top-right corner, click **+ new source**.
-3. On the source setup page, select **SurveyMonkey** from the Source type dropdown and enter a name for this connector.
-4. Add **Access Token**
-5. Choose required Start date
-6. Click `Set up source`.
+1. Go to the Airbyte Open Source dashboard page.
+2. In the left navigation bar, click **Sources**. In the top right corner, click **+ New Source**.
+3. On the source setup page, enter a name for this connector.
+4. Enter your `Access Token`.
+5. Choose the required Start date.
+6. Click **Set up source**.
+
 <!-- /env:oss -->
 
 ## Supported streams and sync modes
 
 - [Surveys](https://api.surveymonkey.com/v3/docs?shell#api-endpoints-get-surveys) \(Incremental\)
+- [SurveyResponses](https://api.surveymonkey.com/v3/docs?shell#api-endpoints-get-surveys-id-responses-bulk) \(Incremental\)
 - [SurveyPages](https://api.surveymonkey.com/v3/docs?shell#api-endpoints-get-surveys-survey_id-pages)
 - [SurveyQuestions](https://api.surveymonkey.com/v3/docs?shell#api-endpoints-get-surveys-survey_id-pages-page_id-questions)
-- [SurveyResponses](https://api.surveymonkey.com/v3/docs?shell#api-endpoints-get-surveys-id-responses-bulk) \(Incremental\)
 - [SurveyCollectors](https://api.surveymonkey.com/v3/docs?shell#api-endpoints-get-surveys-survey_id-collectors)
 - [Collectors](https://api.surveymonkey.com/v3/docs?shell#api-endpoints-get-collectors-collector_id-)
 
-### Performance considerations
+## Performance considerations
 
-The SurveyMonkey API applies heavy API quotas for default private apps, which have the following limits:
+The SurveyMonkey API applies heavy API quotas for default private apps. To cover more data from this source, we use caching.
 
-- 125 requests per minute
-- 500 requests per day
-
-To cover more data from this source we use caching.
+See rate limits [here](https://developer.surveymonkey.com/api/v3/#request-and-response-limits).
 
 ## Changelog
 
